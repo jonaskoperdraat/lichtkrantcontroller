@@ -1,8 +1,7 @@
 package nl.jonaskoperdraat.lichtkrantcontroller.rest;
 
-import nl.jonaskoperdraat.lichtkrantcontroller.model.AutoPage;
-import nl.jonaskoperdraat.lichtkrantcontroller.model.Page;
 import nl.jonaskoperdraat.lichtkrantcontroller.model.Show;
+import nl.jonaskoperdraat.lichtkrantcontroller.model.ShowStatus;
 import nl.jonaskoperdraat.lichtkrantcontroller.parse.ShowParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -10,8 +9,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.LinkedList;
-import java.util.List;
 
 /**
  * Class for the rest interface for loading and controlling a {@link Show}.
@@ -23,25 +20,17 @@ public class ShowController {
     @Autowired
     ShowParser showParser;
 
-    @RequestMapping(value = "/", method = RequestMethod.GET)
+    @Autowired
+    Show show;
+
+    @RequestMapping(value = "", method = RequestMethod.GET)
     Show getShow() {
-        Show show = new Show();
-
-        List<Page> pages = new LinkedList<>();
-
-        pages.add( new Page("Pagina 1"));
-        pages.add( new Page("Pagina 2"));
-        pages.add( new Page("Pagina 3"));
-        pages.add( new Page("Pagina 4"));
-        pages.add( new AutoPage(15, "Autopagina 5"));
-
-        show.setPages(pages);
-
         return show;
     }
 
     @RequestMapping(value = "/open", method = RequestMethod.POST)
-    Show open(@RequestParam("file") MultipartFile file) throws InvalidFileFormatException, IOException {
+    @ResponseStatus(HttpStatus.OK)
+    void open(@RequestParam("file") MultipartFile file) throws InvalidFileFormatException, IOException {
 
         if (file.isEmpty()) {
             throw new InvalidFileFormatException();
@@ -50,16 +39,37 @@ public class ShowController {
         showParser.setInputStream(file.getInputStream());
 
         // parse input file into show.
-        showParser.parse();
-
-        // TODO store show
-
-        // return parsed show
-        return showParser.getShow();
+        showParser.parse(show);
     }
 
-    @ResponseStatus(value=HttpStatus.BAD_REQUEST, reason="Unable to parse the uploaded file")
+    @RequestMapping(value = "/goToPage/{pageNrString}")
+    ShowStatus goToPage(@PathVariable String pageNrString) throws InvalidPageNumberException {
+
+        int pageNr = 0;
+
+        try {
+            pageNr = Integer.parseInt(pageNrString);
+
+            show.goToPage(pageNr);
+        } catch (NumberFormatException e)
+        {
+            throw new InvalidPageNumberException();
+        } catch (Show.PageNumberOutOfBoundsException e) {
+            throw new InvalidPageNumberException();
+        }
+
+        return show.getStatus();
+    }
+
+    @ResponseStatus(value=HttpStatus.BAD_REQUEST, reason="Unable to parse the uploaded file.")
     private class InvalidFileFormatException extends Exception {
         private static final long serialVersionUID = 100L;
     }
+
+    @ResponseStatus(value = HttpStatus.BAD_REQUEST, reason="The page number is either in an invalid format or the page requested does not exist.")
+    private class InvalidPageNumberException extends Exception
+    {
+        private static final long serialVersionUID = 101L;
+    }
+
 }

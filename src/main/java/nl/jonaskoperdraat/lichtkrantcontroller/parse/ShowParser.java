@@ -23,13 +23,11 @@ public class ShowParser {
 
     private BufferedReader reader;
 
-    private Show show;
-
-    public void parse() throws IOException {
+    public void parse(Show show) throws IOException {
 
         LOG.debug("Parsing input stream.");
 
-        show = new Show();
+        show.reset();
 
         if (reader == null) {
             throw new IOException("No input stream provided!");
@@ -63,8 +61,4 @@ public class ShowParser {
         reader = new BufferedReader(new InputStreamReader(inputStream));
     }
 
-
-    public Show getShow() {
-        return show;
-    }
 }

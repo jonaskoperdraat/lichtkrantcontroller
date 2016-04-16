@@ -25,6 +25,9 @@ public class ShowParserTest {
     @Autowired
     ShowParser showParser;
 
+    @Autowired
+    Show show;
+
     @Test
     public void testParse() throws IOException {
         String[] pages = new String[] {
@@ -39,9 +42,7 @@ public class ShowParserTest {
 
         showParser.setInputStream(inputStream);
 
-        showParser.parse();
-
-        Show show = showParser.getShow();
+        showParser.parse(show);
 
         for( int i = 0; i < pages.length; i++ ) {
             assertEquals(showParser.cleanLine(pages[i]), show.getPages().get(i).getContent());
