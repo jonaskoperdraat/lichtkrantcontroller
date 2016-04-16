@@ -13,13 +13,14 @@
     <link rel="stylesheet" href="styles/main.css">
 
 </head>
-<body ng-app="lichtkrantControllerApp">
+<body ng-app="lichtkrantControllerApp" ng-controller="lichtkrantControllerCtrl">
 
 <nav class="navbar navbar-default navbar-inverse">
     <div class="container-fluid">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                    data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
                 <span class="sr-only">Toggle navigation</span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
@@ -32,29 +33,37 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right">
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span> <!--<span class="caret"></span>--></a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                       aria-expanded="false"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+                        <!--<span class="caret"></span>--></a>
                     <div class="dropdown-menu">
                         <div style="margin : 3px 20px; white-space: nowrap">
-                            <h4><span class="glyphicon glyphicon-folder-open" style="margin-right: 12px;"></span>Load a show from file</h4>
-                            <form id="fileOpenForm">
+                            <h4><span class="glyphicon glyphicon-folder-open" style="margin-right: 12px;"></span>Load a
+                                show from file</h4>
+                            <form name="loadShowForm">
                                 <div class="form-group">
                                     <div class="input-group">
-                                <span class="input-group-btn">
-                                    <span class="btn btn-primary btn-file">
-                                        Browse&hellip; <input type="file"/>
-                                    </span>
-                                </span>
+                                        <span class="input-group-btn">
+                                            <span class="btn btn-primary btn-file">
+                                                Browse&hellip;
+                                                <input type="file" ngf-select
+                                                       ng-model="showFile" name="file" accept="text/plain"
+                                                    required/>
+                                            </span>
+                                        </span>
                                         <input type="text" class="form-control" readonly style="min-width: 100px;">
                                     </div>
                                 </div>
-                                <input class="btn btn-primary" type="button" value="Open">
+                                <input class="btn btn-primary" type="button" value="Open"
+                                       ng-disabled="!loadShowForm.$valid" ng-click="loadShow(showFile)">
                             </form>
                         </div>
                         <div class="divider"></div>
                         <div style="margin : 3px 20px; white-space: nowrap">
-                            <h4><span class="glyphicon glyphicon-info-sign" style="margin-right: 12px;"></span>About</h4>
+                            <h4><span class="glyphicon glyphicon-info-sign" style="margin-right: 12px;"></span>About
+                            </h4>
                             <p>
-                                <strong>Lichtkrantcontroller v...</strong><br />
+                                <strong>Lichtkrantcontroller v...</strong><br/>
                                 &copy; 2016 Jonas Koperdraat
                             </p>
                         </div>
@@ -65,63 +74,29 @@
     </div><!-- /.container-fluid -->
 </nav>
 
-
-            <!--<a class="navbar-brand" href="#/">Lichtkrantcontroller</a>-->
-        <!--</div>-->
-<!---->
-        <!--<div class="nav-collapse">-->
-            <!--<ul class="nav pull-right">-->
-                <!--<form class="dropdown">-->
-                    <!--<li class="dropdown">-->
-                        <!--<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"-->
-                       <!--aria-expanded="false">-->
-                            <!--<span class="glyphicon glyphicon-cog" aria-hidden="true"></span>-->
-                        <!--</a>-->
-                        <!--<div class="dropdown-menu">-->
-                            <!--<span class="dropdown-header">-->
-                                <!--<span class="glyphicon glyphicon-folder-open"></span> Load a show from file-->
-                            <!--</span>-->
-                            <!--<form method="POST" action="/show/open" enctype='multipart/form-data'>-->
-<!---->
-                                <!--<div class="input-group">-->
-                                    <!--<span class="input-group-addon" id="basic-addon1">File</span>-->
-                                        <!--<span class="btn btn-default btn-file">-->
-                                        <!--</span>-->
-                                <!--</div>-->
-<!---->
-                                <!--<label class="btn btn-primary" for="file">-->
-                                    <!--<input type="file" name="file" id="file"-->
-                                           <!--style="display:none;"/>-->
-                                    <!--Select-->
-                                <!--</label>-->
-                            <!--</form>-->
-                            <!--<input type="submit" value="Open"/>-->
-                            <!--</form>-->
-                            <!--<span role="separator" class="divider"></span>-->
-                            <!--<span class="dropdown-header"><span class="glyphicon glyphicon-info-sign"></span> About</span>-->
-                            <!--<div>Lichtkrantcontroller v...<br/>-->
-                                <!--&copy; 2016 Jonas Koperdraat-->
-                            <!--</div>-->
-                        <!--</div>-->
-                    <!--</li>-->
-            <!--</ul>-->
-        <!--</div>-->
-    <!--</div>-->
-<!--</div>-->
-
-<!--<div ng-app></div>-->
-
-<!--<div class="container">-->
-<!--<div class="jumbotron">-->
-<!--</div>-->
-<!--</div>-->
+<div class="container-fluid">
+    <div class="well well-sm">GLOSTER  Seine Mutter nur zu gut.</div>
+        <div class="well well-sm current">und bekam einen Sohn für ihre Wiege,</div>
+        <div class="well well-sm next">KENT  Ja doch. Aber mit nicht üblem Erfolg.</div>
+        <div class="well well-sm">GLOSTER  Ich habe auch einen rechtmäßigen Sohn,</div>
+        <div class="well well-sm">Dieser Schelm kam etwas vorwitzig in die Welt,</div>
+        <div class="well well-sm">Der Graf von Kent.</div>
+        <div class="well well-sm">Dort kommt der König …</div>
+        <div class="well well-sm">&nbsp;</div>
+        <div class="well well-sm">Gloster, kümmere dich um Frankreich.</div>
+        <div class="well well-sm">...</div>
+    </ul>
+</div>
 
 <!-- bower:js -->
 <script src="bower_components/angular/angular.js"></script>
 <script src="bower_components/jquery/dist/jquery.js"></script>
 <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+<script src="bower_components/ng-file-upload/ng-file-upload.js"></script>
+<script src="bower_components/ng-file-upload-shim/ng-file-upload-shim.js"></script>
 <!-- endbower -->
 
+<!--<script src="scripts/app.js"></script>-->
 <script src="scripts/lichtkrantcontroller.js"></script>
 
 </body>
