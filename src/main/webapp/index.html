@@ -2,12 +2,127 @@
 <html>
 <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+
     <title>Lichtkrantcontroller</title>
+
+    <!-- bower:css -->
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css"/>
+    <!-- endbower -->
+
+    <link rel="stylesheet" href="styles/main.css">
+
 </head>
-<body>
-    <form method="POST" action="/show/open" enctype='multipart/form-data'>
-        <input type="file" name="file" />
-        <input type="submit" value="Open" />
-    </form>
+<body ng-app="lichtkrantControllerApp">
+
+<nav class="navbar navbar-default navbar-inverse">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">Lichtkrantcontroller</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span> <!--<span class="caret"></span>--></a>
+                    <div class="dropdown-menu">
+                        <div style="margin : 3px 20px; white-space: nowrap">
+                            <h4><span class="glyphicon glyphicon-folder-open" style="margin-right: 12px;"></span>Load a show from file</h4>
+                            <form id="fileOpenForm">
+                                <div class="form-group">
+                                    <div class="input-group">
+                                <span class="input-group-btn">
+                                    <span class="btn btn-primary btn-file">
+                                        Browse&hellip; <input type="file"/>
+                                    </span>
+                                </span>
+                                        <input type="text" class="form-control" readonly style="min-width: 100px;">
+                                    </div>
+                                </div>
+                                <input class="btn btn-primary" type="button" value="Open">
+                            </form>
+                        </div>
+                        <div class="divider"></div>
+                        <div style="margin : 3px 20px; white-space: nowrap">
+                            <h4><span class="glyphicon glyphicon-info-sign" style="margin-right: 12px;"></span>About</h4>
+                            <p>
+                                <strong>Lichtkrantcontroller v...</strong><br />
+                                &copy; 2016 Jonas Koperdraat
+                            </p>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+</nav>
+
+
+            <!--<a class="navbar-brand" href="#/">Lichtkrantcontroller</a>-->
+        <!--</div>-->
+<!---->
+        <!--<div class="nav-collapse">-->
+            <!--<ul class="nav pull-right">-->
+                <!--<form class="dropdown">-->
+                    <!--<li class="dropdown">-->
+                        <!--<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"-->
+                       <!--aria-expanded="false">-->
+                            <!--<span class="glyphicon glyphicon-cog" aria-hidden="true"></span>-->
+                        <!--</a>-->
+                        <!--<div class="dropdown-menu">-->
+                            <!--<span class="dropdown-header">-->
+                                <!--<span class="glyphicon glyphicon-folder-open"></span> Load a show from file-->
+                            <!--</span>-->
+                            <!--<form method="POST" action="/show/open" enctype='multipart/form-data'>-->
+<!---->
+                                <!--<div class="input-group">-->
+                                    <!--<span class="input-group-addon" id="basic-addon1">File</span>-->
+                                        <!--<span class="btn btn-default btn-file">-->
+                                        <!--</span>-->
+                                <!--</div>-->
+<!---->
+                                <!--<label class="btn btn-primary" for="file">-->
+                                    <!--<input type="file" name="file" id="file"-->
+                                           <!--style="display:none;"/>-->
+                                    <!--Select-->
+                                <!--</label>-->
+                            <!--</form>-->
+                            <!--<input type="submit" value="Open"/>-->
+                            <!--</form>-->
+                            <!--<span role="separator" class="divider"></span>-->
+                            <!--<span class="dropdown-header"><span class="glyphicon glyphicon-info-sign"></span> About</span>-->
+                            <!--<div>Lichtkrantcontroller v...<br/>-->
+                                <!--&copy; 2016 Jonas Koperdraat-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</li>-->
+            <!--</ul>-->
+        <!--</div>-->
+    <!--</div>-->
+<!--</div>-->
+
+<!--<div ng-app></div>-->
+
+<!--<div class="container">-->
+<!--<div class="jumbotron">-->
+<!--</div>-->
+<!--</div>-->
+
+<!-- bower:js -->
+<script src="bower_components/angular/angular.js"></script>
+<script src="bower_components/jquery/dist/jquery.js"></script>
+<script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+<!-- endbower -->
+
+<script src="scripts/lichtkrantcontroller.js"></script>
+
 </body>
 </html>

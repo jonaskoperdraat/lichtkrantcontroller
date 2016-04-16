@@ -1,0 +1,28 @@
+{
+  "name": "lichtkrantcontroller",
+  "version": "1.0.0",
+  "description": "Controller voor een lichtklrant",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jonaskoperdraat/lichtkrantcontroller.git"
+  },
+  "author": "Jonas Koperdraat",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jonaskoperdraat/lichtkrantcontroller/issues"
+  },
+  "homepage": "https://github.com/jonaskoperdraat/lichtkrantcontroller#readme",
+  "devDependencies": {
+    "grunt": "^1.0.1",
+    "grunt-contrib-concat": "^1.0.0",
+    "grunt-contrib-jshint": "^1.0.0",
+    "grunt-contrib-qunit": "^1.2.0",
+    "grunt-contrib-uglify": "^1.0.1",
+    "grunt-contrib-watch": "^1.0.0",
+    "grunt-wiredep": "^3.0.1"
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "name": "lichtkrantcontroller",
+  "description": "Controller voor een lichtklrant",
+  "main": "index.html",
+  "authors": [
+    "Jonas Koperdraat"
+  ],
+  "license": "ISC",
+  "homepage": "https://github.com/jonaskoperdraat/lichtkrantcontroller",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "^1.5.4",
+    "bootstrap": "3.3.4"
+  }
+}
