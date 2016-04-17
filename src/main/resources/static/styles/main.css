@@ -20,3 +20,11 @@ input[readonly] {
     background-color: white !important;
     cursor: text !important;
 }
+
+.current {
+    color: red;
+}
+
+.next {
+    text-decoration : underline;
+}

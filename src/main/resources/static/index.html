@@ -40,7 +40,7 @@
                         <div style="margin : 3px 20px; white-space: nowrap">
                             <h4><span class="glyphicon glyphicon-folder-open" style="margin-right: 12px;"></span>Load a
                                 show from file</h4>
-                            <form name="loadShowForm">
+                            <form name="uploadShowForm">
                                 <div class="form-group">
                                     <div class="input-group">
                                         <span class="input-group-btn">
@@ -55,7 +55,7 @@
                                     </div>
                                 </div>
                                 <input class="btn btn-primary" type="button" value="Open"
-                                       ng-disabled="!loadShowForm.$valid" ng-click="loadShow(showFile)">
+                                       ng-disabled="!uploadShowForm.$valid" ng-click="uploadShow(showFile)">
                             </form>
                         </div>
                         <div class="divider"></div>
@@ -75,17 +75,7 @@
 </nav>
 
 <div class="container-fluid">
-    <div class="well well-sm">GLOSTER  Seine Mutter nur zu gut.</div>
-        <div class="well well-sm current">und bekam einen Sohn für ihre Wiege,</div>
-        <div class="well well-sm next">KENT  Ja doch. Aber mit nicht üblem Erfolg.</div>
-        <div class="well well-sm">GLOSTER  Ich habe auch einen rechtmäßigen Sohn,</div>
-        <div class="well well-sm">Dieser Schelm kam etwas vorwitzig in die Welt,</div>
-        <div class="well well-sm">Der Graf von Kent.</div>
-        <div class="well well-sm">Dort kommt der König …</div>
-        <div class="well well-sm">&nbsp;</div>
-        <div class="well well-sm">Gloster, kümmere dich um Frankreich.</div>
-        <div class="well well-sm">...</div>
-    </div>
+    <div ng-repeat="page in showData.pages" class="well well-sm" ng-class="{'current': page.isCurrent, 'next': page.isNext}">{{page.content ? page.content : '&nbsp;'}}</div>
 </div>
 
 <!-- bower:js -->

@@ -1,8 +1,9 @@
 //inject angular file upload directives and services.
 var app = angular.module('lichtkrantControllerApp', ['ngFileUpload']);
 
-app.controller('lichtkrantControllerCtrl', ['$scope', 'Upload', '$timeout', function ($scope, Upload, $timeout) {
-    $scope.loadShow = function(file) {
+app.controller('lichtkrantControllerCtrl', ['$scope', 'Upload', '$timeout', '$http', function ($scope, Upload, $timeout, $http) {
+
+    $scope.uploadShow = function(file) {
         file.upload = Upload.upload({
             url: '/show/open',
             data: {file: file},
@@ -11,6 +12,8 @@ app.controller('lichtkrantControllerCtrl', ['$scope', 'Upload', '$timeout', func
         file.upload.then(function (response) {
             $timeout(function () {
                 file.result = response.data;
+                $('.dropdown.open .dropdown-toggle').dropdown('toggle');
+                $scope.loadShow();
             });
         }, function (response) {
             if (response.status > 0)
@@ -19,7 +22,26 @@ app.controller('lichtkrantControllerCtrl', ['$scope', 'Upload', '$timeout', func
             // Math.min is to fix IE which reports 200% sometimes
             file.progress = Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
         });
-    }
+    };
+
+    $scope.loadShow = function() {
+        $http.get('/show').
+            success(function(data) {
+                if (data.uuid != null) {
+                    var currentPage = data.status.currentPage;
+                    if (currentPage < data.pages.length)
+                        data.pages[currentPage].isCurrent = true;
+                    if (currentPage < data.pages.length - 1)
+                        data.pages[currentPage + 1].isNext = true;
+                    $scope.showData = data;
+                }
+            });
+    };
+
+    (function() {
+        $scope.loadShow();
+    })()
+
 }]);
 
 $(document).on('change', '.btn-file :file', function() {
