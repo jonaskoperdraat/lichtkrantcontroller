@@ -68,7 +68,14 @@
 </nav>
 
 <div class="container-fluid">
-    <div ng-repeat="page in showData.pages" class="well well-sm" ng-class="{'current': page.isCurrent, 'next': page.isNext}">{{page.content ? page.content : '&nbsp;'}}</div>
+    <div ng-repeat="page in showData.pages">
+        <div ng-if="page.isNext" class="controls pull-left">
+            <div><a href="" name="upArrow" ng-click="moveNextPointerTo($index-1)"><span class="glyphicon glyphicon-chevron-up"></span></a></div>
+            <div><a href="" name="goToPage" ng-click="goToPage($index)"><span class="glyphicon glyphicon-play"></span></a></div>
+            <div><a href="" name="downArrow" ng-click="moveNextPointerTo($index+1)"><span class="glyphicon glyphicon-chevron-down"></span></a></div>
+        </div>
+        <div class="well well-sm" style="margin-left : 30px;"
+             ng-class="{'current': page.isCurrent, 'next': page.isNext}">{{page.content ? page.content : '&nbsp;'}}</div>
 </div>
 
 <!-- bower:js -->

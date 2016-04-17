@@ -33,9 +33,32 @@ app.controller('lichtkrantControllerCtrl', ['$scope', 'Upload', '$timeout', '$ht
                         data.pages[currentPage].isCurrent = true;
                     if (currentPage < data.pages.length - 1)
                         data.pages[currentPage + 1].isNext = true;
+                    if (currentPage ==   data.pages.length - 1)
+                        data.pages[currentPage].isNext = true;
                     $scope.showData = data;
                 }
             });
+    };
+
+    $scope.goToPage = function(index) {
+        console.log('goToPage(' + index + ')');
+        $http.get('/show/goToPage/' + index).
+            success(function(data) {
+                $scope.loadShow();
+            });
+            // TODO: use ShowStatus object that is being returned to update FE instead of re-loading entire show.
+            // TODO: handle error situations.
+    };
+    
+    $scope.moveNextPointerTo = function(index) {
+        console.log('moveNextPointerTo(' + index + ')');
+        // Prevent the index going out of bounds.
+        index = Math.min($scope.showData.pages.length-1, Math.max(0, index));
+        // Traverse the pages, removing the current 'isNext' variable and setting 'isNext' on the correct page.
+        for(var i = 0; i < $scope.showData.pages.length; i++) {
+            delete $scope.showData.pages[i].isNext;
+            $scope.showData.pages[i].isNext = i == index;
+        }
     };
 
     (function() {
