@@ -51,6 +51,12 @@ public class ShowParser {
 
         show.setPages(pages);
 
+        try {
+            show.goToPage(0);
+        } catch (Show.PageNumberOutOfBoundsException e) {
+            e.printStackTrace();
+        }
+
     }
 
     String cleanLine(String line) {

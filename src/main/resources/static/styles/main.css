@@ -24,7 +24,3 @@ input[readonly] {
 .current {
     color: red;
 }
-
-.next {
-    text-decoration : underline;
-}
