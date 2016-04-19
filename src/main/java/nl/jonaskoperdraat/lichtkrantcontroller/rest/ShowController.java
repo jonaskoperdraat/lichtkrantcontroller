@@ -3,11 +3,15 @@ package nl.jonaskoperdraat.lichtkrantcontroller.rest;
 import nl.jonaskoperdraat.lichtkrantcontroller.model.Show;
 import nl.jonaskoperdraat.lichtkrantcontroller.model.ShowStatus;
 import nl.jonaskoperdraat.lichtkrantcontroller.parse.ShowParser;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.annotation.PostConstruct;
 import java.io.IOException;
 
 /**
@@ -17,11 +21,21 @@ import java.io.IOException;
 @RequestMapping("/show")
 public class ShowController {
 
+    private static final Logger LOG = LoggerFactory.getLogger(ShowController.class);
+
+    @Value("testproperty")
+    String testproperty;
+
     @Autowired
     ShowParser showParser;
 
     @Autowired
     Show show;
+
+    @PostConstruct
+    void init() {
+        LOG.debug("Testproperty: {}", testproperty);
+    }
 
     @RequestMapping(value = "", method = RequestMethod.GET)
     Show getShow() {

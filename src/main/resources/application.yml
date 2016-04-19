@@ -1,0 +1,8 @@
+spring:
+  profiles:
+    active: production
+
+logging:
+  file: lichtkrantController.log
+
+testproperty: inside-jar

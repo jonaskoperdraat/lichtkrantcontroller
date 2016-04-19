@@ -1,4 +1,4 @@
-package nl.jonaskoperdraat.lichtkrantcontroller.dispaly;
+package nl.jonaskoperdraat.lichtkrantcontroller.display;
 
 import nl.jonaskoperdraat.lichtkrantcontroller.Application;
 import nl.jonaskoperdraat.lichtkrantcontroller.model.Show;
