@@ -6,3 +6,10 @@ logging:
   file: lichtkrantController.log
 
 testproperty: inside-jar
+
+serial:
+  port: COM10
+  baudrate: 9600
+  startbits: 8
+  stopbits: 1
+  parity: none
