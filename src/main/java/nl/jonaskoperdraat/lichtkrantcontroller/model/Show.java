@@ -1,5 +1,6 @@
 package nl.jonaskoperdraat.lichtkrantcontroller.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import nl.jonaskoperdraat.lichtkrantcontroller.Application;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -74,6 +75,11 @@ public class Show extends Observable {
     public synchronized void addObserver(Observer o) {
         LOG.debug("Show.addObserver({})", o);
         super.addObserver(o);
+    }
+
+    @JsonIgnore
+    public Page getCurrentPage() {
+        return pages.get(status.getCurrentPage());
     }
 
     public class PageNumberOutOfBoundsException extends Exception {

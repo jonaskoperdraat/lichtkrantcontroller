@@ -6,10 +6,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.*;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -36,13 +34,21 @@ public class ShowParser {
         List<Page> pages = new LinkedList<>();
 
         String line;
+
         while((line = reader.readLine()) != null) {
 
             LOG.debug("Adding line:");
             LOG.debug("Input: {}", line);
 
             // Strip any non text characters from the line
-            line = cleanLine(line);
+//            line = cleanLine(line);
+
+//            String intvals = "";
+//            for(char c : line.toCharArray()) {
+//                intvals += "" + ((int)c) + ", ";
+//            }
+
+            LOG.debug("Int values: {}", Arrays.toString(line.getBytes("IBM437")));
 
             LOG.debug("Clean: {}", line);
 
@@ -63,8 +69,8 @@ public class ShowParser {
         return line.replaceAll("[^\\w\\s!@#$^&*()_\\-\\+:;?\"'.,><]", "");
     }
 
-    public void setInputStream(InputStream inputStream) {
-        reader = new BufferedReader(new InputStreamReader(inputStream));
+    public void setInputStream(InputStream inputStream) throws UnsupportedEncodingException {
+        reader = new BufferedReader(new InputStreamReader(inputStream, "IBM437"));
     }
 
 }
