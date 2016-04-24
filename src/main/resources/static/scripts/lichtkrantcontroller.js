@@ -3,6 +3,8 @@ var app = angular.module('lichtkrantControllerApp', ['ngFileUpload']);
 
 app.controller('lichtkrantControllerCtrl', ['$scope', 'Upload', '$timeout', '$http', function ($scope, Upload, $timeout, $http) {
 
+    $scope.nextPointerIndex = 1;
+
     $scope.uploadShow = function(file) {
         file.upload = Upload.upload({
             url: '/show/open',
@@ -31,10 +33,14 @@ app.controller('lichtkrantControllerCtrl', ['$scope', 'Upload', '$timeout', '$ht
                     var currentPage = data.status.currentPage;
                     if (currentPage < data.pages.length)
                         data.pages[currentPage].isCurrent = true;
-                    if (currentPage < data.pages.length - 1)
+                    if (currentPage < data.pages.length - 1) {
                         data.pages[currentPage + 1].isNext = true;
-                    if (currentPage ==   data.pages.length - 1)
+                        $scope.nextPointerIndex = currentPage + 1;
+                    }
+                    if (currentPage ==   data.pages.length - 1) {
                         data.pages[currentPage].isNext = true;
+                        $scope.nextPointerIndex = currentPage;
+                    }
                     $scope.showData = data;
                 }
             });
@@ -53,19 +59,65 @@ app.controller('lichtkrantControllerCtrl', ['$scope', 'Upload', '$timeout', '$ht
     $scope.moveNextPointerTo = function(index) {
         console.log('moveNextPointerTo(' + index + ')');
         // Prevent the index going out of bounds.
-        index = Math.min($scope.showData.pages.length-1, Math.max(0, index));
+        $scope.nextPointerIndex = Math.min($scope.showData.pages.length-1, Math.max(0, index));
         // Traverse the pages, removing the current 'isNext' variable and setting 'isNext' on the correct page.
         for(var i = 0; i < $scope.showData.pages.length; i++) {
             delete $scope.showData.pages[i].isNext;
-            $scope.showData.pages[i].isNext = i == index;
+            $scope.showData.pages[i].isNext = i == $scope.nextPointerIndex;
         }
     };
+
+    $scope.moveNextPointerBackward = function() {
+        $scope.moveNextPointerTo($scope.nextPointerIndex - 1)
+    };
+
+    $scope.moveNextPointerForward = function() {
+        $scope.moveNextPointerTo($scope.nextPointerIndex + 1)
+    };
+
+    $scope.$on('keydown', function(onEvent, keypressEvent) {
+        console.log('received keydown notification');
+        switch (keypressEvent.which) {
+            case 13 :
+                // console.log('Handling enter...');
+                $scope.goToPage($scope.nextPointerIndex);
+                break;
+            case 38: // Up
+            case 75: // K
+                // console.log('Handling up arrow...');
+                $scope.moveNextPointerBackward();
+                break;
+            case 40: // Down
+            case 74: // J
+                // console.log('Handling down arrow');
+                $scope.moveNextPointerForward();
+            default:
+                break;
+        }
+        $scope.$apply();
+    });
 
     (function() {
         $scope.loadShow();
     })()
 
 }]);
+
+app.directive('keyListener', [
+    '$document',
+    '$rootScope',
+    function ($document, $rootScope) {
+        return {
+            restrict: 'A',
+            link: function () {
+                $document.bind('keydown', function (e) {
+                    console.log('Got keydown:', e.which);
+                    $rootScope.$broadcast('keydown', e)
+                });
+            }
+        };
+    }
+]);
 
 $(document).on('change', '.btn-file :file', function() {
     var input = $(this),
