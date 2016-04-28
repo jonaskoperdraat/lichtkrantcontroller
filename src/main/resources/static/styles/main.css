@@ -21,6 +21,22 @@ input[readonly] {
     cursor: text !important;
 }
 
-.current {
-    color: red;
+body {
+    background: #000 !important;
+    padding-top : 70px;
+}
+
+.well {
+    background: #111;
+    border-color: #222;
+    color: #999;
+    font : 2em courier, monospace;
+}
+
+.well.current {
+    color:  #F00;
+}
+
+.well.next {
+    color: #337AB7;
 }

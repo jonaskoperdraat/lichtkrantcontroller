@@ -35,13 +35,16 @@ app.controller('lichtkrantControllerCtrl', ['$scope', 'Upload', '$timeout', '$ht
                         data.pages[currentPage].isCurrent = true;
                     if (currentPage < data.pages.length - 1) {
                         data.pages[currentPage + 1].isNext = true;
-                        $scope.nextPointerIndex = currentPage + 1;
+                        nextPointerIndex = currentPage + 1;
                     }
-                    if (currentPage ==   data.pages.length - 1) {
+                    if (currentPage == data.pages.length - 1) {
                         data.pages[currentPage].isNext = true;
-                        $scope.nextPointerIndex = currentPage;
+                        nextPointerIndex = currentPage;
                     }
                     $scope.showData = data;
+                    $scope.moveNextPointerTo(nextPointerIndex);
+                    // $scope.$apply();
+//                     $scope.scrollToNextPointer();
                 }
             });
     };
@@ -49,13 +52,13 @@ app.controller('lichtkrantControllerCtrl', ['$scope', 'Upload', '$timeout', '$ht
     $scope.goToPage = function(index) {
         console.log('goToPage(' + index + ')');
         $http.get('/show/goToPage/' + index).
-            success(function(data) {
-                $scope.loadShow();
-            });
-            // TODO: use ShowStatus object that is being returned to update FE instead of re-loading entire show.
-            // TODO: handle error situations.
+        success(function(data) {
+            $scope.loadShow();
+        });
+        // TODO: use ShowStatus object that is being returned to update FE instead of re-loading entire show.
+        // TODO: handle error situations.
     };
-    
+
     $scope.moveNextPointerTo = function(index) {
         console.log('moveNextPointerTo(' + index + ')');
         // Prevent the index going out of bounds.
@@ -65,7 +68,18 @@ app.controller('lichtkrantControllerCtrl', ['$scope', 'Upload', '$timeout', '$ht
             delete $scope.showData.pages[i].isNext;
             $scope.showData.pages[i].isNext = i == $scope.nextPointerIndex;
         }
+        $scope.scrollToNextPointer();
     };
+
+    $scope.scrollToNextPointer = function() {
+        //var paddingpx = $(window).height() / 2;
+        //$('.well.next').animatescroll({padding : paddingpx + 'px'});
+        // $('.well.next').animatescroll();
+        $timeout(
+            $('.well.next').animatescroll({padding: Math.floor($(window).height()/2 - $('.well.next').height())})
+        )
+    };
+
 
     $scope.moveNextPointerBackward = function() {
         $scope.moveNextPointerTo($scope.nextPointerIndex - 1)
@@ -81,16 +95,19 @@ app.controller('lichtkrantControllerCtrl', ['$scope', 'Upload', '$timeout', '$ht
             case 13 :
                 // console.log('Handling enter...');
                 $scope.goToPage($scope.nextPointerIndex);
+                keypressEvent.preventDefault();
                 break;
             case 38: // Up
             case 75: // K
                 // console.log('Handling up arrow...');
                 $scope.moveNextPointerBackward();
+                keypressEvent.preventDefault();
                 break;
             case 40: // Down
             case 74: // J
                 // console.log('Handling down arrow');
                 $scope.moveNextPointerForward();
+                keypressEvent.preventDefault();
             default:
                 break;
         }

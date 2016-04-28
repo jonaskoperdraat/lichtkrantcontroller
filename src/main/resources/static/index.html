@@ -15,7 +15,7 @@
 </head>
 <body ng-app="lichtkrantControllerApp" ng-controller="lichtkrantControllerCtrl" key-listener>
 
-<nav class="navbar navbar-default navbar-inverse">
+<nav class="navbar navbar-default navbar-inverse navbar-fixed-top">
     <div class="container-fluid">
 
         <div class="navbar-header pull-left">
@@ -76,6 +76,7 @@
         </div>
         <div class="well well-sm" style="margin-left : 30px;"
              ng-class="{'current': page.isCurrent, 'next': page.isNext}">{{page.content ? page.content : '&nbsp;'}}</div>
+    </div>
 </div>
 
 <!-- bower:js -->
@@ -88,6 +89,7 @@
 
 <!--<script src="scripts/app.js"></script>-->
 <script src="scripts/lichtkrantcontroller.js"></script>
+<script src="scripts/animatescroll.min.js"></script>
 
 </body>
 </html>
