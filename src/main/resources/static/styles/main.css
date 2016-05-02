@@ -40,3 +40,23 @@ body {
 .well.next {
     color: #337AB7;
 }
+
+.btn.btn-primary {
+    background-color: hsla(208,56%,19%,1);
+    border-color: hsla(208,65%,28%,1);
+    color: #999999;
+}
+
+.dropdown-menu.navbar-inverse {
+    color: #999999;
+}
+
+.dropdown-menu .divider {
+    background-color: #444;
+}
+
+input.form-control {
+    background-color: #999 !important;
+    border-color:  #AAA;
+    color: #222;
+}
