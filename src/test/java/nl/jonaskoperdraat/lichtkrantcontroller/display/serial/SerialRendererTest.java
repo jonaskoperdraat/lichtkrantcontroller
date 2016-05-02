@@ -12,8 +12,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 /**
  * Created by jonas on 29-4-2016.
  */
-@RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(AppConfiguration.class)
+//@RunWith(SpringJUnit4ClassRunner.class)
+//@SpringApplicationConfiguration(AppConfiguration.class)
 public class SerialRendererTest {
 
     @Autowired
@@ -21,8 +21,8 @@ public class SerialRendererTest {
 
 
     // @TODO mock show and make renderer send message on notify.
-    @Test
-    @Ignore
+//    @Test
+//    @Ignore
     public void sendTestMessage() throws InterruptedException {
         serialRenderer.sendMessage("Lichtkrant test...");
 

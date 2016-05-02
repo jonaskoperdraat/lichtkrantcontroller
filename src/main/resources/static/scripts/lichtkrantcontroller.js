@@ -3,6 +3,11 @@ var app = angular.module('lichtkrantControllerApp', ['ngFileUpload']);
 
 app.controller('lichtkrantControllerCtrl', ['$scope', 'Upload', '$timeout', '$http', function ($scope, Upload, $timeout, $http) {
 
+    $http.get('/info').
+        success(function(data) {
+            $scope.VERSION = data["applicationVersion"];
+        });
+
     $scope.nextPointerIndex = 1;
 
     $scope.uploadShow = function(file) {

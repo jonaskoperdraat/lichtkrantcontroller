@@ -13,3 +13,6 @@ serial:
   startbits: 8
   stopbits: 1
   parity: none
+
+application:
+  version: @project.version@
