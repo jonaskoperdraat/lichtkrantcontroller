@@ -59,37 +59,53 @@ public class SerialRenderer implements Observer {
         }
     }
 
-    private void sendMessage(String message){
+    public void sendMessage(String message){
 
         // Initialize byte array with length of message + 4 bytes header + 2 bytes footer.
-        byte[] serialMessage = new byte[message.length() + 6];
+        char[] serialMessage = new char[message.length() + 13];
 
         try {
             byte[] messageBytes = message.getBytes("IBM437");
 
-            serialMessage[0] = 0; // NUL - Header sync.
-            serialMessage[1] = 1; // Number of text lines on the sign -- 1 for now.
-            serialMessage[2] = 0; // Sign address -- 0 = 'All'.
-            serialMessage[3] = 3; // ETX - End of text (header)
+            int i = 0;
 
-            for (int i = 0; i < messageBytes.length; i++) {
-                serialMessage[i + 4] = messageBytes[i];
+            serialMessage[i++] = 0; // NUL - Header sync.
+            serialMessage[i++] = 1; // Number of text lines on the sign -- 1 for now.
+            serialMessage[i++] = 0; // Sign address -- 0 = 'All'.
+            serialMessage[i++] = 3; // ETX - End of text (header)
+
+            serialMessage[i++] = (char)(Short.parseShort("11000000", 2)); // Serial status flag
+            serialMessage[i++] = 48; // Page number x100 (ASCII)
+            serialMessage[i++] = 48; // Page number x10  (ASCII)
+            serialMessage[i++] = 49; // Page number x1   (ASCII)
+
+            serialMessage[i++] = (char)Short.parseShort("11100000", 2); // Tempo
+            serialMessage[i++] = (char)Short.parseShort("11000001", 2); // Function
+            serialMessage[i++] = (char)Short.parseShort("10000000", 2); // Page status
+
+            for (int j = 0; j < messageBytes.length; j++) {
+                serialMessage[j + i] = (char)messageBytes[j];
             }
 
             serialMessage[serialMessage.length - 2] = 4; // EOT - End Of Transmission (text)
 
             // Calculate checksum
             int checksum = 0;
-            for ( int i = 0; i < serialMessage.length-1; i++ ) {
-                checksum = checksum ^ serialMessage[i];
+            for ( int j = 0; j < serialMessage.length-1; j++ ) {
+                checksum = checksum ^ serialMessage[j];
             }
-            serialMessage[serialMessage.length-1] = (byte) checksum;
+            serialMessage[serialMessage.length-1] = (char) checksum;
 
             LOG.debug("Sending message: {}", Arrays.toString(serialMessage));
 
+            byte[] serialByteMessage = new byte[serialMessage.length];
+            for( int j = 0; j < serialByteMessage.length; j++) {
+                serialByteMessage[j] = (byte)serialMessage[j];
+            }
+
             // Send the message over the serial connection.
             DataOutputStream out = new DataOutputStream(nrSerialPort.getOutputStream());
-            out.write(serialMessage);
+            out.write(serialByteMessage);
             out.close();
 
             LOG.debug("Message sent.");
